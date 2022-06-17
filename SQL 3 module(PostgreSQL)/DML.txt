@@ -1,0 +1,41 @@
+insert into category (name, description) values ('Бытовая техника', 'Все что относиться к бытовой технике');
+insert into category (name, description, parent_id) values ('Пылесосы', 'Все что относиться к пылесосам', 1);
+insert into category (name, description, parent_id) values ('Чайники', 'Все что относиться к чайникам', 1);
+
+insert into item (name, category_id) values ('Vitek', 3);
+insert into item (name, category_id) values ('Rotex', 3);
+
+
+select*from category;
+select name, * from category;
+select * from item;
+select * from item where name = 'Vitek' and id = 1;
+
+delete  
+
+update item set item_count = 22 where id = 2;
+alter table item 
+	add column item_count integer default 0;
+
+select nextval('item_id_seq'::regclass); - последователбность номера id (сігвалс)
+
+select c."name" categori_name, i."name" item_name, i.item_count from category c 
+left join item i on i.category_id = c.id 
+
+insert into item ("name", category_id) values ('Rotex TM', 2);
+insert into orders (number, descr, user_id) values (667, 'My first order', 2);
+select * from orders o;
+select * from order_lines ol ;
+insert into order_lines (order_id, item_id, item_count) values (5, 1, 1);
+
+select u."name" user_name,
+		o."number" order_number,
+		o.descr order_description,
+		c."name" item_category,
+		i."name" item_name,
+		ol.item_count  
+from orders o 
+join order_lines ol on o.id = ol.order_id
+join users u on o.user_id = u.id 
+join item i on i.id = ol.item_id
+join category c on i.category_id = c.id 
