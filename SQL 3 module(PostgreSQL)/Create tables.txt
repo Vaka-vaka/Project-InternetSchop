@@ -1,15 +1,17 @@
 create table Users (
-	id serial primary key,
-	name varchar(50) not null,
+	id serial primary key, --serial
+	name varchar(50) not null, --not null - ні пустому імені
 	description varchar(250)
 );
 
-create table Item (
+create table Items (
 	id serial primary key,
 	name varchar(50),
 	category_id integer not null,
 	constraint category_id_fk foreign key (category_id) references category(id) 
 );
+
+drop table items; --видалить таблицю Items 
 
 create table Groups (
 	id serial primary key,
@@ -17,7 +19,11 @@ create table Groups (
 );
 
 alter table groups 
-	add column dascription varchar(250) - добавить
+	add column description varchar(250) -- add
+;
+
+alter table groups 
+	drop column description -- delete
 ;
 
 create table group_to_user (
@@ -31,7 +37,7 @@ create table group_to_user (
 
 create table user_extend (
 	additinal_data text,	
-	user_id integer unique not null, (уникальна запись unique) 
+	user_id integer unique not null,-- (уникальна запись unique) 
 	constraint user_id_fk foreign key (user_id) references users(id) 
 );
 
@@ -59,4 +65,3 @@ create table order_lines (
 	constraint order_id_fk foreign key (order_id) references orders(id),
 	constraint item_id_fk foreign key (item_id) references item(id)
 );
-
