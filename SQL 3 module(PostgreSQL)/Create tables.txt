@@ -35,11 +35,15 @@ create table group_to_user (
 );
 
 
-create table user_extend (
+create table user_extend (  --one to one
 	additinal_data text,	
 	user_id integer unique not null,-- (уникальна запись unique) 
 	constraint user_id_fk foreign key (user_id) references users(id) 
 );
+
+alter table user_extend  
+	add column user_id set not null -- add not null
+;
 
 create table Orders (
 	id serial primary key,
