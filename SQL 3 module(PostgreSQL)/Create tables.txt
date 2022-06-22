@@ -1,4 +1,4 @@
-create table Users (
+reate table Users (
 	id serial primary key, --serial
 	name varchar(50) not null, --not null - ні пустому імені
 	description varchar(250)
@@ -42,7 +42,7 @@ create table user_extend (  --one to one
 );
 
 alter table user_extend  
-	add column user_id set not null -- add not null
+	alter column user_id set not null -- add not null
 ;
 
 create table Orders (
@@ -52,6 +52,9 @@ create table Orders (
 	user_id integer not null,
 	constraint user_id foreign key (user_id) references users(id) 
 ); 
+
+alter table orders 
+	alter column number set not null --add not null
 
 create table category (
 	id serial primary key,
