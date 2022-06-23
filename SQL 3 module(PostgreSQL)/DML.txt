@@ -1,23 +1,16 @@
-insert into category (name, description) values ('Бытовая техника', 'Все что относиться к бытовой технике');
-insert into category (name, description, parent_id) values ('Пылесосы', 'Все что относиться к пылесосам', 1);
-insert into category (name, description, parent_id) values ('Чайники', 'Все что относиться к чайникам', 1);
-
-insert into item (name, category_id) values ('Vitek', 3);
-insert into item (name, category_id) values ('Rotex', 3);
-
-
-select*from category;
+select * from category;
 select name, * from category;
-select * from item;
-select * from item where name = 'Vitek' and id = 1;
+select * from items;
+select * from items where name = 'Vitek' and id = 3; --where ограничение 
+select * from items where id <>3; --<> неровно 3
 
-delete  
+delete from items where id <>3; --видалити все що не рівне 3
 
 update item set item_count = 22 where id = 2;
 alter table item 
 	add column item_count integer default 0;
 
-select nextval('item_id_seq'::regclass); - последователбность номера id (сігвалс)
+select nextval('items_id_seq'::regclass); -- автоматична генерація последователбность номера id (сігванс)
 
 select c."name" categori_name, i."name" item_name, i.item_count from category c 
 left join item i on i.category_id = c.id 
