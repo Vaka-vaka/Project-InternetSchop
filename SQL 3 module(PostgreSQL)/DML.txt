@@ -3,7 +3,7 @@ insert into category (name, description, parent_id) values ('Пылесосы', 
 insert into category (name, description, parent_id) values ('Чайники', 'Все что относиться к чайникам', 1);
 
 insert into items (name, category_id) values ('Vitek', 3);
-insert into items (name, category_id) values ('Rotex', 3);
+insert into items (name, category_id) values ('Rotex', 2);
 
 select * from category;
 select name, * from category;
@@ -27,19 +27,26 @@ select * from items i ;
 update items set item_count = 22, name = 'RotexTM' where id = 5;
 update items set item_count = 11 where id = 3;
 
-delete from items where id = 26; --delete
+delete from items where id = 27; --delete
 
 select c2.name as category_name, i."name" items_name, i.item_count from category c2 
-joi n items i on i.category_id = c2.id ;--join приєднати
+join items i on i.category_id = c2.id ;--join приєднати
 
 select c."name" categori_name, i."name" item_name, i.item_count from category c 
-left join items i on i.category_id = c.id; 
+full join items i on i.category_id = c.id; 
 
 insert into item ("name", category_id) values ('RotexTM', 2);
 insert into orders (number, descr, user_id) values (667, 'My first order', 2);
 select * from orders o;
 select * from order_lines ol ;
-insert into order_lines (order_id, item_id, item_count) values (5, 1, 1);
+insert into order_lines (order_id, item_id, item_count) values (5, 3, 1);
+
+select * from orders o 
+join order_lines ol on o.id = ol.order_id ;
+
+select u."name", o."number", o.descr, ol. * from orders o  
+join order_lines ol on o.id = ol.order_id 
+join users u on o.user_id = u.id ;
 
 select u."name" user_name,
 		o."number" order_number,
@@ -50,5 +57,5 @@ select u."name" user_name,
 from orders o 
 join order_lines ol on o.id = ol.order_id
 join users u on o.user_id = u.id 
-join item i on i.id = ol.item_id
-join category c on i.category_id = c.id 
+join items i on i.id = ol.item_id
+join category c on i.category_id = c.id ;
