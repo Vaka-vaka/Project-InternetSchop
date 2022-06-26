@@ -55,7 +55,53 @@ select u."name" user_name,
 		i."name" item_name,
 		ol.item_count  
 from orders o 
-join order_lines ol on o.id = ol.order_id
+left join order_lines ol on o.id = ol.order_id
 join users u on o.user_id = u.id 
-join items i on i.id = ol.item_id
-join category c on i.category_id = c.id ;
+left join items i on i.id = ol.item_id
+left join category c on i.category_id = c.id 
+order by i."name" desc --сортировка
+;
+
+select * from "groups" g;
+
+select * from users u ;
+alter table users  
+	add column just_text varchar(50);
+
+select * from group_to_user gtu ;
+
+insert into group_to_user (user_id, group_id) values (1, 3);
+
+select * from "groups" g 
+join group_to_user gtu on g.id  = gtu.group_id 
+join users u on u.id = gtu.user_id 
+where g."name" = 'General'
+;
+
+select * from items i ;
+select * from items order by category_id; --сорт по категор
+select * from items order by id desc; --возрастание
+select * from items order by id asc; --убывание
+
+--групировки та агрегации
+select count(*) from items i; --count sum avg(середне) min max
+select count(item_count) from items i where category_id  = 3;
+--групировки 
+select category_id, sum (item_count), count(*)  from items i 
+group by category_id 
+;
+
+select u."name", o.descr, sum(ol.item_count) from orders o 
+left join order_lines ol on o.id  = ol.order_id 
+join users u on o.user_id = u.id 
+group by u."name", o.descr  
+;
+
+select * from items limit 2
+select *from items order by data desc limit 1 -- сортировка по даті
+
+select distinct category_id  from items i  
+
+select * from items where id in (3, 2);
+
+insert into items (name, category_id) values ('Some items', (select id from category c where name = 'Чайники'));--?
